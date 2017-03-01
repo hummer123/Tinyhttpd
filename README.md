@@ -10,6 +10,8 @@ Compile for Linux
   3) Comment out the two lines that run pthread_create().
   4) Uncomment the line that runs accept_request().
   5) Remove -lsocket from the Makefile.
+  6) 设置color.cgi和check.cgi 可执行权限.
+  7) 修改color.cgi和check.cgi 脚本的解释器位置，linux通过 which perl 获得.
 ```
 
 <p>&nbsp; &nbsp; &nbsp;每个函数的作用：</p>
