@@ -243,17 +243,13 @@ void execute_cgi(int client, const char *path,
     else if (strcasecmp(method, "POST") == 0) /*POST*/
     {
         numchars = get_line(client, buf, sizeof(buf));
-		printf("post buf = %s", buf); ///
         while ((numchars > 0) && strcmp("\n", buf))
         {
             buf[15] = '\0';
             if (strcasecmp(buf, "Content-Length:") == 0)
-            {
                 content_length = atoi(&(buf[16]));
-				printf("ppp --> content_lenth = %d\n", content_length); ///
-            }
+			
             numchars = get_line(client, buf, sizeof(buf));
-			printf("post buf = %s", buf); ///
         }
         if (content_length == -1) {
             bad_request(client);
@@ -293,11 +289,11 @@ void execute_cgi(int client, const char *path,
         sprintf(meth_env, "REQUEST_METHOD=%s", method);
         putenv(meth_env);
         if (strcasecmp(method, "GET") == 0) {
-            sprintf(query_env, "QUERY_STRING=%s", query_string); ///
+            sprintf(query_env, "QUERY_STRING=%s", query_string);
             putenv(query_env);
         }
         else {   /* POST */
-            sprintf(length_env, "CONTENT_LENGTH=%d", content_length); ///
+            sprintf(length_env, "CONTENT_LENGTH=%d", content_length);
             putenv(length_env);
         }
         execl(path, path, NULL);
@@ -311,13 +307,11 @@ void execute_cgi(int client, const char *path,
             for (i = 0; i < content_length; i++) 
 			{
                 recv(client, &c, 1, 0);
-				printf("color.cgi fat input: %c\n",c); ///
                 write(cgi_input[1], &c, 1);
             }
-		printf("color.cgi son OK!\n"); ///
+
         while (read(cgi_output[0], &c, 1) > 0)
         {
-			printf("color.cgi son output: %c\n", c); ///
 			send(client, &c, 1, 0);
         }
 
@@ -436,7 +430,6 @@ void serve_file(int client, const char *filename)
     while ((numchars > 0) && strcmp("\n", buf))  /* read & discard headers */
     {
 		numchars = get_line(client, buf, sizeof(buf));
-		printf("buf = %s", buf);
 	}
         
     resource = fopen(filename, "r");
